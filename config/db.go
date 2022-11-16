@@ -1,6 +1,8 @@
 package config
 
 import (
+	"challenge-relation-gin/models"
+
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 )
@@ -14,6 +16,8 @@ func StartDB() {
 	if err != nil {
 		panic(err)
 	}
+
+	DB.AutoMigrate(&models.Hero{}, &models.Meta{})
 }
 
 func GetDB() *gorm.DB {
