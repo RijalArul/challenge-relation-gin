@@ -12,12 +12,16 @@ var DB *gorm.DB
 func StartDB() {
 	var err error
 	dsn := "root:root@tcp(localhost)/heroes_db?charset=utf8mb4&parseTime=True&loc=Local"
-	DB, err = gorm.Open(mysql.Open(dsn), &gorm.Config{})
+	DB, err = gorm.Open(mysql.Open(dsn), &gorm.Config{
+		SkipDefaultTransaction: true,
+	})
 	if err != nil {
 		panic(err)
 	}
 
-	DB.AutoMigrate(&models.Hero{}, &models.Meta{})
+	DB.AutoMigrate(&models.Hero{})
+	DB.AutoMigrate(&models.Meta{})
+
 }
 
 func GetDB() *gorm.DB {
